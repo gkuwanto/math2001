@@ -44,8 +44,8 @@ theorem problem4b {x : ℤ} (h1 : x + 4 = 2) : x = -2 := by
     _ = -2 := by ring
 
 /- 4c -/
-theorem problem4c {w : ℚ} (h1 : 3 * w + 1 = 4) : w = 1 := by
+theorem problem4c {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 :=
   calc
-    w = (3 * w + 1 - 1)/3 := by ring
-    _ = (4 - 1) / 3 := by rw [h1]
-    _ = 1 := by ring
+    a = a - 5 * b + 5 * (b + 2 - 2) := by ring
+    _ = 4 + 5 * (3 - 2) := by rw [h1, h2]
+    _ = 9 := by ring
