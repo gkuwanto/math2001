@@ -11,15 +11,17 @@ theorem de_morgan_2 {p q : Prop} : (¬p∧ ¬q)  → ¬(p ∨ q) := by
   obtain ⟨hnp, hnq⟩ := h
   intro h1
   cases h1 with
-  | inl hp => exact hnp hp
-  | inr hq => exact hnq hq
+  | inl hp => apply hnp hp
+  | inr hq => apply hnq hq
   
 -- Problem 5 d
 theorem de_morgan_3 {p q : Prop} : (¬p ∨ ¬q ) → ¬(p ∧ q) := by
   intro h
+  intro h1
+  obtain ⟨hp, hq⟩ := h1
   cases h with
-  | inl hnp => intro h1; exact hnp h1.1
-  | inr hnq => intro h1; exact hnq h1.2
+  | inl hnp => apply hnp hp
+  | inr hnq => apply hnq hq
   
 
 theorem problem6a {x y : ℤ} (h1 : x + 3 ≥ 2 * y) (h2 : 1 ≤ y) : x ≥ -1 := by
