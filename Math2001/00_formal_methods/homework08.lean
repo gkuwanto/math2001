@@ -7,15 +7,10 @@ import Library.Tactic.Numbers
 import Library.Tactic.Addarith
 import Library.Tactic.Use
 
-attribute [-instance] Int.instDivInt_1 Int.instDivInt EuclideanDomain.instDiv Nat.instDivNat
-set_option linter.unusedVariables false
-
-namespace Nat
-
 notation3 (prettyPrint := false) "forall_sufficiently_large "(...)", "r:(scoped P => ∃ C, ∀ x ≥ C, P x) => r
 
--- Problemn 4a
-example {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d] := by
+/- 2 points -/
+theorem problem4a {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d] := by
   simple_induction n with k hk
   . use 0
     simp
@@ -28,8 +23,8 @@ example {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d
     _ = a*(d*x) + b^k*(d*y) := by rw [hx, hy]
     _ = d*(a*x + b^k*y) := by ring
 
--- Problem 4a
-example : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
+/- 3 points -/
+theorem problem4b : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
   dsimp
   use 4
   intro n hn
@@ -48,8 +43,8 @@ example : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
     _ = (k+1)^2 + 7 := by ring
     _ ≥ (k+1)^2 := by extra
 
--- Problem 4c
-example {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
+/- 2 points -/
+theorem problem4c {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
   simple_induction n with k hk
   . simp
   . have ha : 0 ≤ 1+a := by addarith [ha]
@@ -60,8 +55,8 @@ example {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
       _ = 1 + (k+1) * a + k * a^2 := by ring
       _ ≥ 1 + (k+1) * a := by extra
 
--- Problem 4d
-example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
+/- 3 points -/
+theorem problem4d : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
   dsimp
   use 5
   intro n hn
@@ -76,12 +71,14 @@ example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
       _ = 2^(k+1) + 100 + 100 := by ring
       _ ≥ 2^(k+1) + 100 := by extra
 
--- Problem 5
-def sum_odd : ℕ → ℕ
-  | 0 => 0
-  | (n + 1) => (2*n + 1) + sum_odd n
-theorem sum_of_odd_is_perfect_square (n : ℕ) : ∃j : ℕ, sum_odd n = j^2 := by
-  use n
+/- 5 points -/
+def foo : ℕ → ℕ
+  | 0     => 1
+  | n + 1 => foo (n) + 2 * n + 3
+
+/- 5 points -/
+theorem problem5b {n : ℕ} : ∃ (k : ℕ), foo (n) = k ^ 2 := by
+  use n+1
   simple_induction n with k hk
   . simp
   . simp [sum_odd]
