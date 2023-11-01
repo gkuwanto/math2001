@@ -81,6 +81,6 @@ theorem problem5b {n : ℕ} : ∃ (k : ℕ), foo (n) = k ^ 2 := by
   use n+1
   simple_induction n with k hk
   . simp
-  . simp [sum_odd]
+  . simp [foo]
     rw [hk]
     ring
