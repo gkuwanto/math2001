@@ -128,6 +128,16 @@ theorem problem5d : Injective (fun ((x, y) : ℝ × ℝ) ↦ (x + y, x + 2 * y, 
   intro h_eq
 
   obtain ⟨h, h', hy⟩ := h_eq
+  have hsnd : a1.snd = a2.snd := by calc
+    a1.snd = a1.fst + 2*a1.snd - (a1.fst + a1.snd):= by ring
+    _ = (a2.fst + 2 * a2.snd)  - (a1.fst + a1.snd) := by rw [h']
+    _ = (a2.fst + 2 * a2.snd) - (a2.fst + a2.snd) := by rw [h]
+    _ = a2.snd := by ring
+  have hfst : a1.fst = a2.fst := calc
+    a1.fst = a1.fst + a1.snd - a1.snd := by ring
+    _ = a2.fst + a2.snd - a1.snd := by rw [h]
+    _ = a2.fst + a2.snd - a2.snd := by rw [hsnd]
+    _ = a2.fst := by ring
   constructor
-  . nlinarith [h, h', hy]
-  . nlinarith [h, h', hy]
+  . apply hfst
+  . apply hsnd
